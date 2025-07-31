@@ -1,0 +1,10 @@
+<div class="p-6">
+  <h1 class="text-xl font-bold mb-4">Seus Artigos Salvos</h1>
+  <% @saved_articles.each do |article| %>
+    <div class="border p-4 rounded mb-2 shadow">
+      <h2 class="text-lg font-semibold"><%= article.title %></h2>
+      <a href="<%= article.url %>" class="text-blue-600 underline" target="_blank">Leia</a>
+      <%= button_to "Remover", remove_saved_article_path(article), method: :delete, class: "mt-2 bg-red-500 text-white px-2 py-1 rounded cursor-pointer" %>
+    </div>
+  <% end %>
+</div>

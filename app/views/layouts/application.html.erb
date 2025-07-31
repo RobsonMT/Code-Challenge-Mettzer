@@ -8,12 +8,46 @@
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
     <%= javascript_importmap_tags %>
+
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <body class="bg-gray-100 text-gray-900">
+    <nav class="bg-white border-b border-gray-200 px-4 py-3 shadow-md">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+        
+        <!-- Logo -->
+        <div>
+          <%= link_to "📰 Mettzer News", root_path, class: "text-xl font-bold text-blue-600" %>
+        </div>
+
+        <!-- Links -->
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-4 gap-2">
+          <% if user_signed_in? %>
+            <div class="flex flex-col md:flex-row md:items-center md:gap-3 text-sm text-gray-700">
+              <span class="text-gray-600">Olá, <%= current_user.email %></span>
+              <%= link_to "🔖 Meus Salvos", saved_list_path, class: "text-blue-600 hover:underline" %>
+              <%= form_with url: destroy_user_session_path, method: :delete, class: "inline" do %>
+                <%= submit_tag "🚪 Sair", class: "text-red-600 hover:underline bg-transparent border-none cursor-pointer" %>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="flex flex-col md:flex-row md:gap-4 text-sm text-blue-600">
+              <%= link_to "👤 Login", new_user_session_path, class: "hover:underline" %>
+              <%= link_to "📝 Cadastrar", new_user_registration_path, class: "hover:underline" %>
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+    </nav>
+
+
+    <div class="container mx-auto mt-6 px-4">
       <%= yield %>
-    </main>
+    </div>
   </body>
+
 </html>
